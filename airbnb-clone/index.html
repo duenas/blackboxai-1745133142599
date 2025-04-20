@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Airbnb Clone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+  <!-- Header -->
+  <header class="sticky top-0 bg-white shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+      <div class="flex items-center space-x-4">
+        <a href="#" class="flex items-center space-x-2">
+          <img src="https://i.ibb.co/2dZqZqZ/elefantle-logo.png" alt="elefantle logo" class="h-8 w-auto" />
+          <span class="text-2xl font-bold text-red-600">elefantle</span>
+        </a>
+      </div>
+      <nav id="mobile-menu" class="hidden space-x-8 items-center">
+      </nav>
+      <div class="flex items-center space-x-4">
+        <!--  <button class="hidden md:block px-4 py-2 border border-gray-300 rounded-full hover:shadow-md transition">Become a host</button> !-->
+        <button class="p-2 rounded-full hover:bg-gray-100 transition">
+          <i class="fas fa-globe"></i>
+        </button>
+        <button id="menu-toggle" class="flex items-center space-x-2 border border-gray-300 rounded-full px-3 py-2 hover:shadow-md transition relative">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-user-circle text-2xl"></i>
+          <div id="user-menu" class="hidden absolute right-0 top-full mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg z-50">
+        <a href="login.html" class="block px-4 py-2 hover:bg-gray-100 flex items-center space-x-2">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Entrar</span>
+        </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 flex items-center space-x-2">
+              <i class="fas fa-user-tie"></i>
+              <span>Agente</span>
+            </a>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+      <button id="closeLoginModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <h2 class="text-2xl font-semibold mb-4">Iniciar Sesión</h2>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="loginEmail" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+          <input type="email" id="loginEmail" name="loginEmail" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600" />
+        </div>
+        <div>
+          <label for="loginPassword" class="block text-sm font-medium text-gray-700">Contraseña</label>
+          <input type="password" id="loginPassword" name="loginPassword" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600" />
+        </div>
+        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition">Entrar</button>
+      </form>
+      <p class="mt-4 text-center text-sm">
+        ¿No tienes cuenta? <button id="showRegister" class="text-red-600 hover:underline">Crear cuenta</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+      <button id="closeRegisterModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <h2 class="text-2xl font-semibold mb-4">Crear Cuenta</h2>
+      <form id="registerForm" class="space-y-4">
+        <div>
+          <label for="registerName" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+          <input type="text" id="registerName" name="registerName" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600" />
+        </div>
+        <div>
+          <label for="registerEmail" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+          <input type="email" id="registerEmail" name="registerEmail" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600" />
+        </div>
+        <div>
+          <label for="registerPassword" class="block text-sm font-medium text-gray-700">Contraseña</label>
+          <input type="password" id="registerPassword" name="registerPassword" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600" />
+        </div>
+        <div>
+          <label for="userType" class="block text-sm font-medium text-gray-700">Tipo de usuario</label>
+          <select id="userType" name="userType" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-red-600 focus:border-red-600">
+            <option value="">Seleccione un tipo</option>
+            <option value="cliente">Cliente</option>
+            <option value="agente">Agente</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition">Crear cuenta</button>
+      </form>
+      <p class="mt-4 text-center text-sm">
+        ¿Ya tienes cuenta? <button id="showLogin" class="text-red-600 hover:underline">Iniciar sesión</button>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const userMenu = document.getElementById('user-menu');
+
+    menuToggle.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'w-64', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+      } else {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'w-64', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+      }
+      // Hide user menu when toggling main menu
+      userMenu.classList.add('hidden');
+    });
+
+    // Toggle user menu on clicking user icon or menu button
+    menuToggle.querySelector('.fa-user-circle').addEventListener('click', (e) => {
+      e.stopPropagation();
+      userMenu.classList.toggle('hidden');
+    });
+
+    // Hide menus when clicking outside
+    document.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      userMenu.classList.add('hidden');
+      closeLoginModal();
+      closeRegisterModal();
+    });
+
+    // Prevent closing when clicking inside menus
+    mobileMenu.addEventListener('click', (e) => e.stopPropagation());
+    userMenu.addEventListener('click', (e) => e.stopPropagation());
+
+    // Login/Register modal logic
+    const loginModal = document.getElementById('loginModal');
+    const registerModal = document.getElementById('registerModal');
+    const closeLoginBtn = document.getElementById('closeLoginModal');
+    const closeRegisterBtn = document.getElementById('closeRegisterModal');
+    const showRegisterBtn = document.getElementById('showRegister');
+    const showLoginBtn = document.getElementById('showLogin');
+    const entrarLinks = document.querySelectorAll('a[href="#login"]');
+
+    function openLoginModal() {
+      loginModal.classList.remove('hidden');
+      registerModal.classList.add('hidden');
+    }
+
+    function closeLoginModal() {
+      loginModal.classList.add('hidden');
+    }
+
+    function openRegisterModal() {
+      registerModal.classList.remove('hidden');
+      loginModal.classList.add('hidden');
+    }
+
+    function closeRegisterModal() {
+      registerModal.classList.add('hidden');
+    }
+
+    closeLoginBtn.addEventListener('click', closeLoginModal);
+    closeRegisterBtn.addEventListener('click', closeRegisterModal);
+    showRegisterBtn.addEventListener('click', openRegisterModal);
+    showLoginBtn.addEventListener('click', openLoginModal);
+
+    // Open login modal when clicking "Entrar" links
+    document.querySelectorAll('a[href="#login"]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        openLoginModal();
+      });
+    });
+
+    // Handle form submissions (for demo purposes only)
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Iniciar sesión: ' + document.getElementById('loginEmail').value);
+      closeLoginModal();
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Crear cuenta: ' + document.getElementById('registerEmail').value + ', Tipo: ' + document.getElementById('userType').value);
+      closeRegisterModal();
+    });
+  </script>
+
+  <!-- Hero Section -->
+  <section class="relative bg-cover bg-center h-[600px] md:h-[300px]" style="background-image: url('https://a0.muscache.com/im/pictures/8a7a7a7a-7a7a-7a7a-7a7a-7a7a7a7a7a7a.jpg'); background-color: #f0f4f8;">
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
+      <h1 class="text-white text-5xl font-extrabold mb-4 max-w-3xl">Encuentra tu propiedad</h1>
+      <p class="text-white text-lg mb-8 max-w-xl"></p>
+      <form class="md:bg-white md:rounded-full md:shadow-lg flex flex-col max-w-4xl w-full px-4 py-2 items-center space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4" onsubmit="event.preventDefault();">
+        <!-- Select for Renta/Compra -->
+        <select id="search-type" class="flex-grow px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600">
+          <option value="renta">Renta</option>
+          <option value="compra">Compra</option>
+        </select>
+
+        <!-- Autocomplete input for location -->
+        <div class="relative flex-grow">
+          <input id="location-input" type="text" placeholder="Zona" autocomplete="off" class="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600" />
+          <ul id="autocomplete-list" class="absolute z-50 bg-white border border-gray-300 rounded-md mt-1 w-full max-h-40 overflow-auto hidden"></ul>
+        </div>
+
+        <!-- Price range input -->
+        <div class="flex flex-col flex-grow w-full sm:w-auto space-y-2">
+          <input type="range" min="0" max="10000" value="5000" id="priceRange" class="w-full appearance-none h-2 bg-gray-300 rounded-lg overflow-hidden" />
+          <div class="flex justify-between text-sm text-gray-600 px-2">
+            <label for="priceRange" class="block font-semibold">Precio máximo</label>
+            <span id="priceValue" class="block mt-1">$5000</span>
+          </div>
+        </div>
+
+        <button type="submit" class="bg-red-600 text-white rounded-full px-6 py-2 hover:bg-red-700 transition w-full sm:w-auto flex justify-center items-center">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+
+      <script>
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+
+        priceRange.addEventListener('input', () => {
+          priceValue.textContent = `$${priceRange.value}`;
+        });
+      </script>
+
+      <script>
+      </script>
+
+      <script>
+        const locations = ['Ciudad de México', 'Guadalajara', 'Monterrey', 'Cancún', 'Puebla', 'Tijuana', 'Mérida'];
+        const locationInput = document.getElementById('location-input');
+        const autocompleteList = document.getElementById('autocomplete-list');
+
+        locationInput.addEventListener('input', () => {
+          const val = locationInput.value.toLowerCase();
+          autocompleteList.innerHTML = '';
+          if (!val) {
+            autocompleteList.classList.add('hidden');
+            return;
+          }
+          const filtered = locations.filter(loc => loc.toLowerCase().includes(val));
+          if (filtered.length === 0) {
+            autocompleteList.classList.add('hidden');
+            return;
+          }
+          filtered.forEach(loc => {
+            const li = document.createElement('li');
+            li.textContent = loc;
+            li.className = 'px-4 py-2 hover:bg-red-100 cursor-pointer';
+            li.addEventListener('click', () => {
+              locationInput.value = loc;
+              autocompleteList.classList.add('hidden');
+            });
+            autocompleteList.appendChild(li);
+          });
+          autocompleteList.classList.remove('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (e.target !== locationInput) {
+            autocompleteList.classList.add('hidden');
+          }
+        });
+      </script>
+    </div>
+  </section>
+
+  <!-- Property Categories -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-gray-300">
+    <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar">
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 border-b-2 border-red-600">
+        <i class="fas fa-home text-xl"></i>
+        <span class="text-sm font-semibold">Casas</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-building text-xl"></i>
+        <span class="text-sm">Departamentos</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-couch text-xl"></i>
+        <span class="text-sm">SUITE/LOFT</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-briefcase text-xl"></i>
+        <span class="text-sm">OFICINA</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-store text-xl"></i>
+        <span class="text-sm">LOCAL</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-tree text-xl"></i>
+        <span class="text-sm">QUINTA</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-mountain text-xl"></i>
+        <span class="text-sm">TERRENO</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-briefcase-medical text-xl"></i>
+        <span class="text-sm">NEGOCIO</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 border-b-2 border-red-600">
+        <i class="fas fa-building text-xl"></i>
+        <span class="text-sm font-semibold">EDIFICIOS</span>
+      </button>
+      <button class="flex flex-col items-center space-y-1 whitespace-nowrap px-4 py-2 border-b-2 border-red-600">
+        <i class="fas fa-project-diagram text-xl"></i>
+        <span class="text-sm font-semibold">PROYECTO</span>
+      </button>
+      <button class="flex items-center justify-center px-4 py-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-chevron-right text-xl"></i>
+      </button>
+      <!-- <button class="ml-auto flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-full hover:shadow-md transition">
+        <i class="fas fa-sliders-h"></i>
+        <span>Filtros</span>
+      </button>
+      <div class="ml-4 flex items-center space-x-2">
+        <label for="tax-toggle" class="text-sm">Mostrar total sin impuestos</label>
+        <input type="checkbox" id="tax-toggle" class="rounded-full cursor-pointer" />
+      </div>!-->
+    </div>
+  </section>
+
+  <!-- Featured Listings -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-3xl font-semibold mb-8">Sugerencias para ti</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
+        <img src="https://a0.muscache.com/im/pictures/12345678-1234-1234-1234-123456789abc.jpg" alt="Listing 1" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-1">Cozy Cottage</h3>
+          <p class="text-gray-600 text-sm">Countryside, USA</p>
+          <p class="mt-2 font-semibold">$120 / night</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
+        <img src="https://a0.muscache.com/im/pictures/23456789-2345-2345-2345-234567890bcd.jpg" alt="Listing 2" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-1">Modern Apartment</h3>
+          <p class="text-gray-600 text-sm">New York, USA</p>
+          <p class="mt-2 font-semibold">$200 / night</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
+        <img src="https://a0.muscache.com/im/pictures/34567890-3456-3456-3456-345678901cde.jpg" alt="Listing 3" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-1">Beach House</h3>
+          <p class="text-gray-600 text-sm">Malibu, USA</p>
+          <p class="mt-2 font-semibold">$350 / night</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
+        <img src="https://a0.muscache.com/im/pictures/45678901-4567-4567-4567-456789012def.jpg" alt="Listing 4" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-1">Mountain Cabin</h3>
+          <p class="text-gray-600 text-sm">Aspen, USA</p>
+          <p class="mt-2 font-semibold">$280 / night</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 border-t border-gray-300 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h4 class="font-semibold mb-4">About</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><a href="#" class="hover:underline">How Airbnb works</a></li>
+          <li><a href="#" class="hover:underline">Newsroom</a></li>
+          <li><a href="#" class="hover:underline">Investors</a></li>
+          <li><a href="#" class="hover:underline">Airbnb Plus</a></li>
+          <li><a href="#" class="hover:underline">Airbnb Luxe</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Community</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><a href="#" class="hover:underline">Diversity & Belonging</a></li>
+          <li><a href="#" class="hover:underline">Accessibility</a></li>
+          <li><a href="#" class="hover:underline">Airbnb Associates</a></li>
+          <li><a href="#" class="hover:underline">Frontline Stays</a></li>
+          <li><a href="#" class="hover:underline">Invite friends</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Host</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><a href="#" class="hover:underline">Host your home</a></li>
+          <li><a href="#" class="hover:underline">Host an Online Experience</a></li>
+          <li><a href="#" class="hover:underline">Host an Experience</a></li>
+          <li><a href="#" class="hover:underline">Responsible hosting</a></li>
+          <li><a href="#" class="hover:underline">Resource Center</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Support</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><a href="#" class="hover:underline">Help Center</a></li>
+          <li><a href="#" class="hover:underline">Safety information</a></li>
+          <li><a href="#" class="hover:underline">Cancellation options</a></li>
+          <li><a href="#" class="hover:underline">Our COVID-19 Response</a></li>
+          <li><a href="#" class="hover:underline">Supporting people with disabilities</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 text-center text-gray-500 text-sm">
+      &copy; 2024 Airbnb, Inc. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>
